@@ -1,0 +1,23 @@
+services:
+  selenium-mcp:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      SELENIUM_BROWSER: chrome
+      SELENIUM_HEADLESS: "true"
+      SELENIUM_HTTP_HOST: 0.0.0.0
+      SELENIUM_HTTP_PORT: "8000"
+      SELENIUM_REMOTE_URL: http://selenium:4444/wd/hub
+    depends_on:
+      selenium:
+        condition: service_healthy
+
+  selenium:
+    image: selenium/standalone-chrome:latest
+    shm_size: 2gb
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4444/status"]
+      interval: 10s
+      timeout: 5s
+      retries: 10

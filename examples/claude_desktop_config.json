@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "selenium": {
+      "command": "selenium-mcp",
+      "env": {
+        "SELENIUM_BROWSER": "chrome",
+        "SELENIUM_HEADLESS": "true"
+      }
+    }
+  }
+}

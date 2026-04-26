@@ -12,7 +12,12 @@ from selenium_mcp_server.models import LocatorStrategy
 logger = logging.getLogger(__name__)
 settings = get_settings()
 browser = BrowserManager(settings)
-mcp = FastMCP("selenium-mcp-server", json_response=True)
+mcp = FastMCP(
+    "selenium-mcp-server",
+    host=settings.http_host,
+    port=settings.http_port,
+    json_response=True,
+)
 
 
 def _as_dict(value: Any) -> Any:
@@ -165,7 +170,14 @@ def wait_for_element(
     visible: bool = True,
 ) -> dict[str, Any]:
     """Wait until an element exists, or until it is visible when requested."""
-    return _run("wait_for_element", browser.wait_for_element, strategy, value, timeout_seconds, visible)
+    return _run(
+        "wait_for_element",
+        browser.wait_for_element,
+        strategy,
+        value,
+        timeout_seconds,
+        visible,
+    )
 
 
 @mcp.tool()
